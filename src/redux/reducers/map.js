@@ -1,10 +1,10 @@
-import {ADD_TILES} from "../actions/types.js";
+import {ADD_TILES} from "../actions/types";
 
-const intialState = {
+const initialState = {
   tiles: []
 };
 
-const map = (state = intialState, action) => {
+const map = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TILES:
       return {
