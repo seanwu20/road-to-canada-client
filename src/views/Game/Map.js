@@ -5,6 +5,45 @@ import {pickupSupplies} from "../../redux/actions";
 import {SPRITE_SIZE} from "../../constants";
 import grass from "../../assets/walkable/grass.png";
 import Supplies from "../../components/Supplies";
+import {tiles} from "../../data/maps/1";
+
+
+const MapBackground = styled.div`
+    width: "1260px";
+    height: "600px";
+    background-image: url(${grass});
+`;
+
+function Map(props) {
+    return (
+        <MapBackground>
+            {tiles.map((row, i) => (
+                <MapRow
+                    key={i}
+                    tiles={row}
+                    player={props.player}
+                    pickupSupplies={props.pickupSupplies}
+                />
+            ))}
+        </MapBackground>
+    );
+}
+
+function MapRow(props) {
+    return (
+        <div className="row">
+            {props.tiles.map((tile, i) => (
+                <MapTile
+                    key={i}
+                    tile={tile}
+                    player={props.player}
+                    pickupSupplies={props.pickupSupplies}
+                />
+            ))}
+        </div>
+    );
+}
+
 
 const SuppliesPopup = styled.div`
   width: 100%;
@@ -118,43 +157,8 @@ function MapTile(props) {
     );
 }
 
-function MapRow(props) {
-    return (
-        <div className="row">
-            {props.tiles.map((tile, i) => (
-                <MapTile
-                    key={i}
-                    tile={tile}
-                    player={props.player}
-                    pickupSupplies={props.pickupSupplies}
-                />
-            ))}
-        </div>
-    );
-}
 
-function Map(props) {
-    const {tiles} = props.map;
 
-    return (
-        <div
-            style={{
-                width: "1260px",
-                height: "600px",
-                backgroundImage: `url('${grass}')`
-            }}
-        >
-            {tiles.map((row, i) => (
-                <MapRow
-                    key={i}
-                    tiles={row}
-                    player={props.player}
-                    pickupSupplies={props.pickupSupplies}
-                />
-            ))}
-        </div>
-    );
-}
 
 const mapStateToProps = state => {
     return {
