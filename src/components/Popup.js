@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {connect} from "react-redux";
 import {MAP_HEIGHT} from "../constants";
 import styled from "styled-components";
-import {moveToNextDestination} from "../actions";
+import {moveToNextDestination} from "../redux/actions";
 
 const PopupStyles = styled.div`
   font-size: 14px;

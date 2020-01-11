@@ -32,7 +32,7 @@ const treeTest = [
   },
 ];
 
-function TheMap(props) {
+function WorldMap(props) {
   const [myTreeData, setmyTreeData] = useState(treeTest);
   useEffect(() => {
   axios.get('https://we-cant-name-things.herokuapp.com/api/map')
@@ -51,7 +51,7 @@ function TheMap(props) {
   )
 }
 
-export default TheMap
+export default WorldMap
 
 //dev notes:
 {/*
