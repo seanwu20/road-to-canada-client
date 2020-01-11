@@ -9,7 +9,7 @@ function WorldMap() {
             {name: '-',}
         ])
     useEffect(() => {
-        axios.get('https://we-cant-name-things.herokuapp.com/api/map/')
+        axios.get(`${process.env.REACT_APP_SERVER}/api/map/`)
             .then(function (response) {
                 setTreeData(response.data)
             })
