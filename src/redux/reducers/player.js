@@ -9,7 +9,7 @@ import {
     NEXT_DESTINATION_FAIL
 } from "../actions/types.js";
 
-const InitialState = {
+const initialState = {
     email: localStorage.getItem('game_email'),
     position: [600, 540],
     spriteLocation: "move_north",
@@ -29,7 +29,7 @@ const InitialState = {
     right: "--"
 };
 
-const player = (state = InitialState, action) => {
+const player = (state = initialState, action) => {
     switch (action.type) {
         case MOVE_PLAYER:
             return {

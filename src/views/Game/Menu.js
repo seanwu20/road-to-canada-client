@@ -18,18 +18,18 @@ export default function Menu({history}) {
         window.location.reload()
     }
 
-    const resetGame = e => {
-        e.preventDefault()
-        Axios
-            .put('https://we-cant-name-things.herokuapp.com/api/move', {
-                "email": localStorage.getItem('game_email'),
-                "food": 12,
-                "water": 32,
-                "new_city": "Miami"
-            })
-            .then(res => console.log('resetRES', res))
-            .catch(err => console.log(err))
-    }
+    // const resetGame = e => {
+    //     e.preventDefault()
+    //     Axios
+    //         .put('https://we-cant-name-things.herokuapp.com/api/move', {
+    //             "email": localStorage.getItem('game_email'),
+    //             "food": 12,
+    //             "water": 32,
+    //             "new_city": "Miami"
+    //         })
+    //         .then(res => console.log('resetRES', res))
+    //         .catch(err => console.log(err))
+    // }
 
     return (
         <div className="menu">

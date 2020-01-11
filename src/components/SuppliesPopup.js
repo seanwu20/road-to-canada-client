@@ -15,15 +15,9 @@ const Popup = styled.div`
 function SuppliesPopup({location, food, water}) {
     return (
         <Popup>
-            <h3>
-                <span className="stat">{location}</span> - You found:
-            </h3>
-            <p>
-                <span style={{color: "#39ff14 "}}>{food}</span> food
-            </p>
-            <p>
-                <span style={{color: "#39ff14 "}}>{water}</span> water
-            </p>
+            <h3 className='stat'>{location} - You found:</h3>
+            <p><span style={{color: "#39ff14 "}}>{food}</span> food</p>
+            <p><span style={{color: "#39ff14 "}}>{water}</span> water</p>
         </Popup>
     );
 }

@@ -8,7 +8,7 @@ import Player from "./../../player/Player";
 import Map from "./Map";
 import Stats from "./Stats";
 import Controls from "./Controls";
-import Popup from "../../components/Popup";
+import Popup from "../../components/NewCityPopUp";
 import IntroText from "./IntroText";
 import Menu from './Menu'
 
@@ -20,8 +20,10 @@ const Screen = styled.div`
     height: 600px;
     margin: 20px auto;
 `;
-const Game = props => {
+const Game = (props) => {
+
     useEffect(() => {
+
         store.dispatch({
             type: "ADD_TILES",
             payload: {
@@ -34,8 +36,6 @@ const Game = props => {
 
     const [newGame, setNewGame] = useState(true)
 
-    console.log(props.player.topOfMap);
-    // console.log(props.game.isNewGame);
     return (
         <>
             <Screen>

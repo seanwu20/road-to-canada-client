@@ -2,53 +2,27 @@ import React, {useState, useEffect} from 'react';
 import Tree from 'react-d3-tree';
 import axios from "axios";
 
-const treeTest = [
-  {
-    name: 'Miami, Florida',
 
-    children: [
-      {
-        name: 'Jacksonville',
-        attributes: {
-          State: 'Florida'
-        },
-    children:[
-      {
-        name: 'Test',
-        attributes: {
-          State: 'GA'
-        }
-      }
-    ]
-
-      },
-      {
-        name: 'THIS IS A TEST',
-        attributes: {
-          State: 'Florida'
-        },
-      },
-    ],
-  },
-];
-
-function WorldMap(props) {
-  const [myTreeData, setmyTreeData] = useState(treeTest);
-  useEffect(() => {
-  axios.get('https://we-cant-name-things.herokuapp.com/api/map')
- .then(function (response) {
-   setmyTreeData(response.data)
-   console.log(response.data);
- })
-.catch(function (error) {
-   console.log(error);
-});
-  }, [])
-  return(
-    <div id="treeWrapper" style={{width: '100%', height: '90em', 'background': 'white'}}>
-          <Tree data={myTreeData} orientation={'vertical'} translate={{x: 400, y: 200} } initialDepth={1} separation={{siblings: 2, nonSiblings: 2.2}}/>
-    </div>
-  )
+function WorldMap() {
+    const [treeData, setTreeData] = useState(
+        [
+            {name: '-',}
+        ])
+    useEffect(() => {
+        axios.get('https://we-cant-name-things.herokuapp.com/api/map/')
+            .then(function (response) {
+                setTreeData(response.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }, [])
+    return (
+        <div id="treeWrapper" style={{width: '100%', height: '90em', 'background': 'white'}}>
+            <Tree data={treeData} orientation={'vertical'} translate={{x: 400, y: 200}} initialDepth={1}
+                  separation={{siblings: 2, nonSiblings: 2.2}}/>
+        </div>
+    )
 }
 
 export default WorldMap
@@ -86,4 +60,5 @@ with an <svg> element's style attribute, for example:
 so we need to ask the backend "what is my current location", and then go through the tree and compare
 if current_location == name, if True, then {color: 'red'} that node/leafNode.
 
-*/}
+*/
+}
