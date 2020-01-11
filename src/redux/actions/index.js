@@ -32,7 +32,7 @@ export const isNewGame = bool => {
   };
 };
 
-export const pickupSupplies = (food, water) => dispatch => {
+export const pickUpSupplies = (food, water) => dispatch => {
   console.log(`PICKED UP ${food} food, ${water} water`);
   //   return function(dispatch) {
   //     dispatch({
