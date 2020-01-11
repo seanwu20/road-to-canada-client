@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 import {
     GET_PLAYER,
     GET_PLAYER_SUCCESS,
@@ -13,7 +12,6 @@ import {
 
 /* Player actions */
 export const getPlayer = () => {
-    console.log(process.env.REACT_APP_SERVER)
     const player = axios.post(
         `${process.env.REACT_APP_SERVER}/api/player/`,
         {email: localStorage.getItem("game_email")}
@@ -23,6 +21,7 @@ export const getPlayer = () => {
         player
             .then(res => {
                 console.log("test", res.data)
+                console.log("test",res.data)
                 dispatch({type: GET_PLAYER_SUCCESS, payload: res.data})
             })
             .catch(err => dispatch({type: GET_PLAYER_FAILURE, payload: err}));
