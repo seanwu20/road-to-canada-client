@@ -1,4 +1,6 @@
 import axios from "axios";
+
+
 import {
     GET_PLAYER,
     GET_PLAYER_SUCCESS,
@@ -11,15 +13,16 @@ import {
 
 /* Player actions */
 export const getPlayer = () => {
+    console.log(process.env.REACT_APP_SERVER)
     const player = axios.post(
-        "https://we-cant-name-things.herokuapp.com/api/player/",
+        `${process.env.REACT_APP_SERVER}/api/player/`,
         {email: localStorage.getItem("game_email")}
     );
     return function (dispatch) {
         dispatch({type: GET_PLAYER});
         player
             .then(res => {
-                console.log("test",res.data)
+                console.log("test", res.data)
                 dispatch({type: GET_PLAYER_SUCCESS, payload: res.data})
             })
             .catch(err => dispatch({type: GET_PLAYER_FAILURE, payload: err}));
@@ -43,7 +46,7 @@ export const moveToNextDestination = (currentPlayerState) => {
     //   e.preventDefault();
     console.log("NEXT_DESTINATION:", currentPlayerState);
     const nextCity = axios.put(
-        "https://we-cant-name-things.herokuapp.com/api/move/",
+        `${process.env.REACT_APP_SERVER}/api/move/`,
         {...currentPlayerState}
     );
     return function (dispatch) {
