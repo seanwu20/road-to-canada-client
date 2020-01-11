@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import Tree from 'react-d3-tree';
-import IntroText from '../components/IntroText';
 import axios from "axios";
 
 const treeTest = [

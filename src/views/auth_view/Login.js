@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import background from '../assets/background/login_background.png'
-import flag from '../assets/background/canadian_flag.png'
-import zombieHand from '../assets/background/zombie_hand.png'
-import character from '../assets/Characters/character_single.png'
-import '../App.css'
+import background from '../../assets/background/login_background.png'
+import flag from '../../assets/background/canadian_flag.png'
+import zombieHand from '../../assets/background/zombie_hand.png'
+import character from '../../assets/Characters/character_single.png'
+import '../../App.css'
 import styled from "styled-components";
 
 const PopupStyles = styled.form`

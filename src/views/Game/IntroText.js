@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {connect} from "react-redux";
-import {isNewGame} from "../actions";
+import {isNewGame} from "../../redux/actions";
 
 const IntroTextStyles = styled.div`
   position: absolute;

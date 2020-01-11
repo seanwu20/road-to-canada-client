@@ -1,16 +1,16 @@
 import React, {useEffect} from "react";
-import {tiles} from "../data/maps/1";
-import {store} from "../store";
+import {tiles} from "../../data/maps/1";
+import {store} from "../../store";
 import {connect} from "react-redux";
-import {getPlayer} from "../actions";
+import {getPlayer} from "../../redux/actions";
 
-import Player from "../player/Player";
-import Map from "../components/Map";
-import Stats from "../components/Stats";
-import Controls from "../components/Controls";
-import Popup from "../components/Popup";
-import IntroText from "../components/IntroText";
-import Menu from '../components/Menu'
+import Player from "./../../player/Player";
+import Map from "./Map";
+import Stats from "./Stats";
+import Controls from "./Controls";
+import Popup from "../../components/Popup";
+import IntroText from "./IntroText";
+import Menu from './Menu'
 
 
 const Game = props => {

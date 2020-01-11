@@ -1,5 +1,4 @@
 import React from "react";
-import player from "../reducers/player";
 import {connect} from "react-redux";
 
 const Stats = ({player}) => {
