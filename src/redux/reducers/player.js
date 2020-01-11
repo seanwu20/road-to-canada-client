@@ -17,16 +17,16 @@ const InitialState = {
     topOfMap: false,
     isFetching: false,
     error: null,
-    food: 12,
-    water: 32,
-    food_available: 2,
-    water_available: 7,
-    food_available2: 1,
-    water_available2: 5,
-    city: "Miami",
-    state: "Florida",
-    left: "Jacksonville",
-    right: "Tallahassee"
+    food: '--',
+    water: '--',
+    food_available: null,
+    water_available: null,
+    food_available2: null,
+    water_available2: null,
+    city: "--",
+    state: "--",
+    left: "--",
+    right: "--"
 };
 
 const player = (state = InitialState, action) => {

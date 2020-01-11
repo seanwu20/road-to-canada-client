@@ -9,8 +9,6 @@ import {tiles} from "../../data/maps/1";
 
 
 const MapBackground = styled.div`
-    width: "1260px";
-    height: "600px";
     background-image: url(${grass});
 `;
 
@@ -70,15 +68,18 @@ function MapTile(props) {
         if (arriveFirstStore || arriveSecondStore) {
             pickUpSupplies(player.food_available, player.water_available);
             setPopup(true)
+
+            if (arriveFirstStore) setPopup([true, false])
+            else if (arriveSecondStore) setPopup([false, true])
         } else setPopup(false)
     }, [player.position]);
 
-    const [popup, setPopup] = useState(false);
+    const [popup, setPopup] = useState([false, false]);
 
     return (
         <>
             <TilesStyle className={`tile ${getTileSprite(tile)}`}/>
-            {popup === true ?
+            {popup[0] === true ?
                 (
                     <SuppliesPopup
                         location={player.location}
@@ -86,7 +87,7 @@ function MapTile(props) {
                         water={player.water_available}
                     />
                 ) : null}
-            {popup === true ? (
+            {popup[1] === true ? (
                 <SuppliesPopup
                     location={player.location_2}
                     food={player.food_available2}

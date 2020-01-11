@@ -25,12 +25,6 @@ export const getPlayer = () => {
   //   return {type: GET_PLAYER, payload: "CHARACTER_NAME"};
 };
 
-export const isNewGame = bool => {
-  return {
-    type: SET_NEWGAME,
-    payload: bool
-  };
-};
 
 export const pickUpSupplies = (food, water) => dispatch => {
   console.log(`PICKED UP ${food} food, ${water} water`);
