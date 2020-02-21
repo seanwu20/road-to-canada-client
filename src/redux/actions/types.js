@@ -1,3 +1,9 @@
+export const CREATE_PLAYER = "CREATE_PLAYER";
+export const CREATE_PLAYER_SUCCESS = "CREATE_PLAYER_SUCCESS";
+export const CREATE_PLAYER_FAILURE = "CREATE_PLAYER_FAILURE";
+
+
+
 export const MOVE_PLAYER = "MOVE_PLAYER";
 export const GET_PLAYER = "GET_PLAYER";
 export const ADD_TILES = "ADD_TILES";

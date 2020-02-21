@@ -1,6 +1,13 @@
 import axios from "axios";
 
+
+
 import {
+    CREATE_PLAYER,
+    CREATE_PLAYER_SUCCESS,
+    CREATE_PLAYER_FAILURE,
+
+
     GET_PLAYER,
     GET_PLAYER_SUCCESS,
     GET_PLAYER_FAILURE,
@@ -9,6 +16,32 @@ import {
     NEXT_DESTINATION_SUCCESS,
     NEXT_DESTINATION_FAIL
 } from "./types";
+
+
+//register, get token, put token in local storage, initialize new player
+
+export const createPlayer = (user_auth, user_id) => {
+    let newUser = axios.post()
+
+    let data = {
+        user_id,
+        user_food: 10,
+        user_water:10,
+        state:"Florida",
+        city:"Miami",
+        location:"fast_food",
+        food_available: 2,
+        water_available: 2,
+        location2:"hotel",
+        food_available2: 2,
+        water_available2: 2,
+    }
+    const newPlayer = axios.post(process.env.REACT_APP_SERVER+'/api/userinfo/', )
+}
+
+
+
+
 
 /* Player actions */
 export const getPlayer = () => {
