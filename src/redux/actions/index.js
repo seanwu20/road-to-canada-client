@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import axiosWithAuth from './../../components/axiosWithAuth'
 
 
 import {
@@ -14,33 +14,57 @@ import {
     PICKUP_SUPPLIES,
     NEXT_DESTINATION,
     NEXT_DESTINATION_SUCCESS,
-    NEXT_DESTINATION_FAIL
+    NEXT_DESTINATION_FAIL, GET_TOKEN, GET_TOKEN_SUCCESS
 } from "./types";
 
 
-//register, get token, put token in local storage, initialize new player
+//register, get token,
+// put token in local storage, initialize new player
 
-export const createPlayer = (user_auth, user_id) => {
-    let newUser = axios.post()
+export const getToken = (userCreds) => {
+    const cleanedUserCred = {username: userCreds.username, email: userCreds.email, password: userCreds.password1}
+    const token = axios.post(`${process.env.REACT_APP_SERVER}/api/token/`, cleanedUserCred);
 
-    let data = {
-        user_id,
-        user_food: 10,
-        user_water:10,
-        state:"Florida",
-        city:"Miami",
-        location:"fast_food",
-        food_available: 2,
-        water_available: 2,
-        location2:"hotel",
-        food_available2: 2,
-        water_available2: 2,
-    }
-    const newPlayer = axios.post(process.env.REACT_APP_SERVER+'/api/userinfo/', )
+    return function (dispatch) {
+        dispatch({type: GET_TOKEN});
+        token.then(res => {
+            localStorage.setItem("token", res.data.access)
+            localStorage.setItem("refresh", res.data.refresh)
+            dispatch({type: GET_TOKEN_SUCCESS});
+
+        })
+            .catch(err => dispatch({type: GET_PLAYER_FAILURE, payload: err.response}));
+    };
 }
 
 
+export const createPlayer = (user_id) => {
+    let data = {
+        user_id,
+        user_food: 10,
+        user_water: 10,
+        state: "Florida",
+        city: "Miami",
+        location: "fast_food",
+        food_available: 2,
+        water_available: 2,
+        location_2: "hotel",
+        water_available_2: 2,
+        food_available_2: 2,
+        left: "Jacksonville",
+        right: "Tallahassee"
+    }
+    const newPlayer = axios.post(`${process.env.REACT_APP_SERVER}/api/userinfo/`, data);
 
+    return function (dispatch) {
+        dispatch({type: CREATE_PLAYER});
+        newPlayer.then(res => {
+            dispatch({type: CREATE_PLAYER_SUCCESS, payload: res.data});
+
+        })
+            .catch(err => dispatch({type: CREATE_PLAYER_FAILURE, payload: err.response}));
+    };
+}
 
 
 /* Player actions */
@@ -54,7 +78,7 @@ export const getPlayer = () => {
         player
             .then(res => {
                 console.log("test", res.data)
-                console.log("test",res.data)
+                console.log("test", res.data)
                 dispatch({type: GET_PLAYER_SUCCESS, payload: res.data})
             })
             .catch(err => dispatch({type: GET_PLAYER_FAILURE, payload: err}));

@@ -5,9 +5,14 @@ import '../../App.css'
 import styled from "styled-components";
 
 
+import {connect} from "react-redux";
+import {getToken, createPlayer} from "../../redux/actions";
+
+
+
 const Register = (props) => {
 
-    const [user, setUser] = useState({
+    const [userCreds, setUserCreds] = useState({
         "username": "",
         "email": "",
         "password1": "",
@@ -17,15 +22,17 @@ const Register = (props) => {
     const [errs, setErr]  = useState([])
 
     const onChangeHandler = (e) => {
-        let userCopy = {...user}
+        let userCopy = {...userCreds}
         userCopy[e.target.name] = e.target.value
-        setUser(userCopy)
+        setUserCreds(userCopy)
     }
     const onSubmitHandler = (e) => {
         e.preventDefault()
-        axios.post(process.env.REACT_APP_SERVER + '/api/register/', user)
+        //register here, pass user data for token
+        axios.post(process.env.REACT_APP_SERVER + '/api/register/', userCreds)
             .then(res => {
-                props.history.push('/game')
+                props.getToken(userCreds)
+                props.createPlayer(res.data.user.pk)
             })
             .catch(error => {
                 let errs = []
@@ -60,4 +67,10 @@ const Register = (props) => {
 
 }
 
-export default Register
+const mapStateToProps = state => {
+    return {
+        ...state
+    };
+};
+
+export default connect(mapStateToProps, {getToken, createPlayer})(Register);
