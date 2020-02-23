@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import {Route} from "react-router-dom";
-import Register from "./views/auth_view/Register";
+import Register from "./views/Entry/Entry";
 import Game from "./views/Game/Game";
 import WorldMap from './views/WorldMap/WorldMap'
 

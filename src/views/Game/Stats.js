@@ -7,7 +7,7 @@ const Stats = ({player}) => {
             <h3>Stats</h3>
             <div className="stat">
                 <span className="stat__title" role='img'>🧑</span> Name:{" "}
-                {player.email.substring(0, player.email.lastIndexOf("@"))}
+                {player.username}
             </div>
             <div className="stat">
                 <span className="stat__title" role='img'>📍</span> Location:{" "}
