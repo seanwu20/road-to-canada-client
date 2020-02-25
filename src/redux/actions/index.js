@@ -1,33 +1,46 @@
 import axios from "axios";
+import axiosWithAuth from './../../components/axiosWithAuth'
+
 
 import {
+    CREATE_PLAYER,
+    CREATE_PLAYER_SUCCESS,
+    CREATE_PLAYER_FAILURE,
+
+    UPDATE_USER,
+
+
     GET_PLAYER,
     GET_PLAYER_SUCCESS,
     GET_PLAYER_FAILURE,
     PICKUP_SUPPLIES,
     NEXT_DESTINATION,
     NEXT_DESTINATION_SUCCESS,
-    NEXT_DESTINATION_FAIL
+    NEXT_DESTINATION_FAIL, GET_TOKEN, GET_TOKEN_SUCCESS, GET_TOKEN_FAILURE
 } from "./types";
+import player from "../reducers/player";
+
+
+//register, get token,
+// put token in local storage, initialize new player
+
+export const updateUserState = (userObj) => {
+    return dispatch => {
+        dispatch({type: UPDATE_USER, payload: userObj})
+    }
+}
+
+
 
 /* Player actions */
-export const getPlayer = () => {
-    const player = axios.post(
-        `${process.env.REACT_APP_SERVER}/api/player/`,
-        {email: localStorage.getItem("game_email")}
-    );
-    return function (dispatch) {
-        dispatch({type: GET_PLAYER});
-        player
-            .then(res => {
-                console.log("test", res.data)
-                console.log("test",res.data)
-                dispatch({type: GET_PLAYER_SUCCESS, payload: res.data})
-            })
-            .catch(err => dispatch({type: GET_PLAYER_FAILURE, payload: err}));
-    };
-    //   return {type: GET_PLAYER, payload: "CHARACTER_NAME"};
-};
+export const getPlayer = (pk) => dispatch => {
+    dispatch({type: GET_PLAYER});
+    axiosWithAuth.get(
+        `${process.env.REACT_APP_SERVER}/api/userinfo/${pk}/`,
+    )
+        .then(res => dispatch({type: GET_PLAYER_SUCCESS, payload: res.data}))
+        .catch(err => dispatch({type: GET_PLAYER_FAILURE, payload: err}));
+}
 
 
 export const pickUpSupplies = (food, water) => dispatch => {
