@@ -30,7 +30,7 @@ const Game = (props) => {
                 tiles
             }
         });
-        props.getPlayer();
+        // props.getPlayer();
 
     }, []);
 

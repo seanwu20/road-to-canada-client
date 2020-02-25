@@ -1,10 +1,10 @@
 import axios from "axios";
 
 const axiosWithAuth = () => {
-    const token = localStorage.getItem("token");
+    const accessToken = localStorage.getItem("access");
     return axios.create({
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${accessToken}`
         }
     });
 };

@@ -21,24 +21,20 @@ import {
 //register, get token,
 // put token in local storage, initialize new player
 
-export const getToken = (userCreds) => {
+export const getToken = (userCreds) => dispatch => {
     const cleanedUserCred = {
         username: userCreds.username,
         email: userCreds.email,
         password: userCreds.password1 || userCreds.password
     }
-    const token = axios.post(`${process.env.REACT_APP_SERVER}/api/token/`, cleanedUserCred);
-
-    return function (dispatch) {
-        dispatch({type: GET_TOKEN});
-        token.then(res => {
-            localStorage.setItem("token", res.data.access)
+    dispatch({type: GET_TOKEN});
+    axios.post(`${process.env.REACT_APP_SERVER}/api/token/`, cleanedUserCred)
+        .then(res => {
+            localStorage.setItem("access", res.data.access)
             localStorage.setItem("refresh", res.data.refresh)
             dispatch({type: GET_TOKEN_SUCCESS});
-
         })
-            .catch(err => dispatch({type: GET_TOKEN_FAILURE, payload: err.response}));
-    };
+        .catch(err => dispatch({type: GET_TOKEN_FAILURE, payload: err.response}))
 }
 
 
@@ -67,28 +63,20 @@ export const createPlayer = (user_id, username) => {
             dispatch({type: CREATE_PLAYER_SUCCESS, payload: data});
 
         })
-            .catch(err => dispatch({type: CREATE_PLAYER_FAILURE, payload: err.response}));
+            .catch(err => dispatch({type: CREATE_PLAYER_FAILURE, payload: err}));
     };
 }
 
 
 /* Player actions */
-export const getPlayer = (pk) => {
-    console.log(pk)
-
-    const player = axiosWithAuth.get(
+export const getPlayer = (pk) => dispatch => {
+    dispatch({type: GET_PLAYER});
+    axiosWithAuth.get(
         `${process.env.REACT_APP_SERVER}/api/userinfo/${pk}/`,
-    );
-    return function (dispatch) {
-        dispatch({type: GET_PLAYER});
-        player
-            .then(res => {
-                dispatch({type: GET_PLAYER_SUCCESS, payload: res.data})
-            })
-            .catch(err => dispatch({type: GET_PLAYER_FAILURE, payload: err.response}));
-    };
-    //   return {type: GET_PLAYER, payload: "CHARACTER_NAME"};
-};
+    )
+        .then(res => dispatch({type: GET_PLAYER_SUCCESS, payload: res.data}))
+        .catch(err => dispatch({type: GET_PLAYER_FAILURE, payload: err}));
+}
 
 
 export const pickUpSupplies = (food, water) => dispatch => {

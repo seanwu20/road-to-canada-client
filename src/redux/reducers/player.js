@@ -66,7 +66,8 @@ const player = (state = initialState, action) => {
             return stateCopy
         case CREATE_PLAYER_FAILURE:
             console.log("CREATE PLAYER FAILURE")
-            return stateCopy
+            console.log(action.payload)
+            return state
 
 
         case GET_PLAYER:
