@@ -59,8 +59,6 @@ const Login = (props) => {
             }
             setLoginErr(errs)
         }
-
-
     }
 
     return (

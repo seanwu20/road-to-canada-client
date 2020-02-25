@@ -31,35 +31,6 @@ export const updateUserState = (userObj) => {
 }
 
 
-export const createPlayer = (user_id, username) => {
-    let data = {
-        user_id,
-        username,
-        user_food: 10,
-        user_water: 10,
-        state: "Florida",
-        city: "Miami",
-        location: "fast_food",
-        food_available: 2,
-        water_available: 2,
-        location_2: "hotel",
-        water_available_2: 2,
-        food_available_2: 2,
-        left: "Jacksonville",
-        right: "Tallahassee"
-    }
-    const newPlayer = axiosWithAuth.post(`${process.env.REACT_APP_SERVER}/api/userinfo/`, data);
-
-    return function (dispatch) {
-        dispatch({type: CREATE_PLAYER});
-        newPlayer.then(res => {
-            dispatch({type: CREATE_PLAYER_SUCCESS, payload: data});
-
-        })
-            .catch(err => dispatch({type: CREATE_PLAYER_FAILURE, payload: err}));
-    };
-}
-
 
 /* Player actions */
 export const getPlayer = (pk) => dispatch => {

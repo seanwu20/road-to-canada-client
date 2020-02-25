@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {connect} from "react-redux";
-import {createPlayer} from "../../redux/actions";
+import {updateUserState} from "../../redux/actions";
 import {withRouter} from 'react-router-dom'
 
 const Register = (props) => {
@@ -24,33 +24,62 @@ const Register = (props) => {
 
 
     }
-    const onSubmitHandler = (e) => {
+    const onSubmitHandler = async e => {
         e.preventDefault()
-        //register a user
-        //set pk in local storage
-        //Create a player instance for them and update global state
-        //push to game
-
-        axios.post(process.env.REACT_APP_SERVER + '/api/register/', newUserCreds)
-            .then(res => {
-                localStorage.setItem("pk", res.data.user.pk)
-
-                // props.getToken(newUserCreds)
-                props.createPlayer(res.data.user.pk, res.data.user.username)
-                props.history.push('/game')
-            })
-            .catch(error => {
-                console.log(error.response)
-                if (error.response.config.url === process.env.REACT_APP_SERVER + '/api/register/' && error.response.status === 400) {
-                    let errs = []
-                    for (let key in error.response.data) {
-                        for (let err of error.response.data[key]) {
-                            errs.push(err)
-                        }
+        try {
+            const registerData = await axios.post(process.env.REACT_APP_SERVER + '/api/register/', newUserCreds)
+            const pk = registerData.data.user.pk
+            localStorage.setItem("pk", pk)
+            try {
+                let cleaned = {...newUserCreds}
+                cleaned.password = newUserCreds.password1
+                let tokenData = await axios.post(process.env.REACT_APP_SERVER + '/api/token/', cleaned)
+                localStorage.setItem("access", tokenData.data.access)
+                try {
+                    let data = {
+                        user_id: parseInt(pk),
+                        username: registerData.data.user.username,
+                        user_food: 10,
+                        user_water: 10,
+                        state: "Florida",
+                        city: "Miami",
+                        location: "fast_food",
+                        food_available: 2,
+                        water_available: 2,
+                        location_2: "hotel",
+                        water_available_2: 2,
+                        food_available_2: 2,
+                        left: "Jacksonville",
+                        right: "Tallahassee"
                     }
-                    setRegisterErrors(errs)
+                    let userData = await axios.post(`${process.env.REACT_APP_SERVER}/api/userinfo/`, data, {
+                        headers: {
+                            Authorization: `Bearer ${tokenData.data.access}`
+                        }
+                    })
+                    props.updateUserState(data)
+                    props.history.push('/game')
+
+
+                } catch (e) {
+                    console.log(e.response)
+                    setRegisterErrors(["We had problems getting your user set up"])
+
                 }
-            })
+            } catch (e) {
+                console.log(e.response)
+                console.log("TOKEN ERROR")
+            }
+        } catch (e) {
+            console.log(e.response.data)
+            let errs = []
+            for (let key in e.response.data) {
+                for (let err of e.response.data[key]) {
+                    errs.push(err)
+                }
+            }
+            setRegisterErrors(errs)
+        }
     }
 
     return (
@@ -70,7 +99,6 @@ const Register = (props) => {
             </form>
 
             <div>
-                {registerErrors.length !== 0 ? 'PLEASE FIX YOUR INPUT' : null}
                 {registerErrors.map(err => {
                     return <div>{err}</div>
                 })}
@@ -80,5 +108,5 @@ const Register = (props) => {
 }
 
 
-export default withRouter(connect(null, {createPlayer})(Register));
+export default withRouter(connect(null, {updateUserState})(Register));
 
