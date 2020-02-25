@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {connect} from "react-redux";
-import {getPlayer, getToken} from "../../redux/actions";
+import {getPlayer, updateUserState} from "../../redux/actions";
 import {withRouter} from 'react-router-dom'
 import axiosWithAuth from "../../components/axiosWithAuth";
 
@@ -26,37 +26,41 @@ const Login = (props) => {
 
     const onSubmitHandler = async e => {
         e.preventDefault()
-        const loginData = await axios.post(process.env.REACT_APP_SERVER + '/api/login/', userCreds)
-        const pk = loginData.data.user.pk
-        localStorage.setItem("pk", pk)
-        let tokenData = await axios.post(process.env.REACT_APP_SERVER + '/api/token/', userCreds)
-        console.log(tokenData.data.access)
-        localStorage.setItem("access", tokenData.data.access)
-        let userData = await axiosWithAuth.get(`${process.env.REACT_APP_SERVER}/api/userinfo/${pk}/`)
-        console.log(userData.response)
-        props.history.push('/')
+        try {
+            const loginData = await axios.post(process.env.REACT_APP_SERVER + '/api/login/', userCreds)
+            const pk = loginData.data.user.pk
+            localStorage.setItem("pk", pk)
+            try {
+                let tokenData = await axios.post(process.env.REACT_APP_SERVER + '/api/token/', userCreds)
+                localStorage.setItem("access", tokenData.data.access)
+                try {
+                    let userData = await axios.get(`${process.env.REACT_APP_SERVER}/api/userinfo/${pk}/`, {
+                        headers: {
+                            Authorization: `Bearer ${tokenData.data.access}`
+                        }
+                    })
+                    props.updateUserState(userData.data)
+                    props.history.push('/game')
 
 
-        // axios.post(process.env.REACT_APP_SERVER + '/api/login/', userCreds)
-        //     .then(async res => {
-        //
-        //         let token  = await props.getToken(userCreds)
-        //
-        //         let player = await props.getPlayer(res.data.user.pk)
-        //         props.history.push('/game')
-        //     })
-        //     .catch(error => {
-        //         console.log(error)
-        //         if (error.response.config.url === process.env.REACT_APP_SERVER + '/api/login/' && error.response.status === 400) {
-        //             let errs = []
-        //             for (let key in error.response.data) {
-        //                 for (let err of error.response.data[key]) {
-        //                     errs.push(err)
-        //                 }
-        //             }
-        //             setLoginErr(errs)
-        //         }
-        //     })
+                } catch (e) {
+                    setLoginErr(["We had problems getting your user"])
+
+                }
+            } catch (e) {
+                console.log("TOKEN ERROR")
+            }
+        } catch (e) {
+            let errs = []
+            for (let key in e.response.data) {
+                for (let err of e.response.data[key]) {
+                    errs.push(err)
+                }
+            }
+            setLoginErr(errs)
+        }
+
+
     }
 
     return (
@@ -75,7 +79,6 @@ const Login = (props) => {
             </form>
 
             <div>
-                {loginErr.length !== 0 ? 'PLEASE FIX YOUR INPUT' : null}
                 {loginErr.map(err => {
                     return <div>{err}</div>
                 })}
@@ -85,4 +88,4 @@ const Login = (props) => {
 }
 
 
-export default withRouter(connect(null, {getToken, getPlayer})(Login));
+export default withRouter(connect(null, {getPlayer, updateUserState})(Login));

@@ -11,7 +11,7 @@ import {
     GET_TOKEN_FAILURE,
     GET_TOKEN_SUCCESS
 } from "../actions/types.js";
-import {CREATE_PLAYER, CREATE_PLAYER_FAILURE, CREATE_PLAYER_SUCCESS} from "../actions/types";
+import {CREATE_PLAYER, CREATE_PLAYER_FAILURE, CREATE_PLAYER_SUCCESS, UPDATE_USER} from "../actions/types";
 
 const initialState = {
     username: "--",
@@ -42,6 +42,10 @@ const initialState = {
 
 const player = (state = initialState, action) => {
     switch (action.type) {
+        case UPDATE_USER:
+            return {...state, ...action.payload}
+
+
         case GET_TOKEN:
             console.log("GETTING TOKEN")
             return state

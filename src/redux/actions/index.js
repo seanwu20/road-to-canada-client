@@ -7,6 +7,8 @@ import {
     CREATE_PLAYER_SUCCESS,
     CREATE_PLAYER_FAILURE,
 
+    UPDATE_USER,
+
 
     GET_PLAYER,
     GET_PLAYER_SUCCESS,
@@ -16,25 +18,16 @@ import {
     NEXT_DESTINATION_SUCCESS,
     NEXT_DESTINATION_FAIL, GET_TOKEN, GET_TOKEN_SUCCESS, GET_TOKEN_FAILURE
 } from "./types";
+import player from "../reducers/player";
 
 
 //register, get token,
 // put token in local storage, initialize new player
 
-export const getToken = (userCreds) => dispatch => {
-    const cleanedUserCred = {
-        username: userCreds.username,
-        email: userCreds.email,
-        password: userCreds.password1 || userCreds.password
+export const updateUserState = (userObj) => {
+    return dispatch => {
+        dispatch({type: UPDATE_USER, payload: userObj})
     }
-    dispatch({type: GET_TOKEN});
-    axios.post(`${process.env.REACT_APP_SERVER}/api/token/`, cleanedUserCred)
-        .then(res => {
-            localStorage.setItem("access", res.data.access)
-            localStorage.setItem("refresh", res.data.refresh)
-            dispatch({type: GET_TOKEN_SUCCESS});
-        })
-        .catch(err => dispatch({type: GET_TOKEN_FAILURE, payload: err.response}))
 }
 
 

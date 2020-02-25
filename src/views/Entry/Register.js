@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {connect} from "react-redux";
-import {createPlayer, getToken} from "../../redux/actions";
+import {createPlayer} from "../../redux/actions";
 import {withRouter} from 'react-router-dom'
 
 const Register = (props) => {
@@ -35,7 +35,7 @@ const Register = (props) => {
             .then(res => {
                 localStorage.setItem("pk", res.data.user.pk)
 
-                props.getToken(newUserCreds)
+                // props.getToken(newUserCreds)
                 props.createPlayer(res.data.user.pk, res.data.user.username)
                 props.history.push('/game')
             })
@@ -80,5 +80,5 @@ const Register = (props) => {
 }
 
 
-export default withRouter(connect(null, {getToken, createPlayer})(Register));
+export default withRouter(connect(null, {createPlayer})(Register));
 

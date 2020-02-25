@@ -6,6 +6,9 @@ export const GET_TOKEN_SUCCESS = "GETTING_TOKEN_SUCCESS";
 export const GET_TOKEN_FAILURE = "GETTING_TOKEN_FAILURE";
 
 
+export const UPDATE_USER = 'UPDATE_USER'
+
+
 
 export const MOVE_PLAYER = "MOVE_PLAYER";
 export const GET_PLAYER = "GET_PLAYER";
