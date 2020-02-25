@@ -1,18 +1,18 @@
 import {ADD_TILES} from "../actions/types";
 
 const initialState = {
-  tiles: []
+    tiles: []
 };
 
 const map = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_TILES:
-      return {
-        ...action.payload
-      };
-    default:
-      return state;
-  }
+    switch (action.type) {
+        case ADD_TILES:
+            return {
+                ...action.payload
+            };
+        default:
+            return state;
+    }
 };
 
 export default map;

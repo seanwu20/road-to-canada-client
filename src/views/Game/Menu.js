@@ -6,15 +6,15 @@ export default function Menu({history}) {
 
     const logout = e => {
         e.preventDefault()
-        localStorage.removeItem('game_token')
-        localStorage.removeItem('game_email')
+        localStorage.removeItem('access')
+        localStorage.removeItem('pk')
         history.push('/login')
         window.location.reload()
     }
 
     const map = e => {
         e.preventDefault()
-        history.push('/map')
+        history.push('/game/map')
         window.location.reload()
     }
 

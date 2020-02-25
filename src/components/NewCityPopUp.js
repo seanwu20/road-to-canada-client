@@ -28,27 +28,26 @@ const DestinationButton = styled.button`
 `;
 
 
-const NewCityPopUp = props => {
+const NewCityPopUp = ({player, moveToNextDestination} )=> {
     const onClickMoveDes = () => {
-        props.moveToNextDestination({
-            email: props.player.email,
-            food: props.player.food - 5,
-            water: props.player.water - 5,
-            new_city: props.player.left
+        moveToNextDestination({
+            user_food: player.user_food - 5,
+            user_water: player.user_water - 5,
+            new_city: player.left
         })
     }
 
     return (
         <PopupStyles>
             <p>Choose your next destination:</p>
-            {props.player.left ?
-                <DestinationButton onClick={onClickMoveDes}>{props.player.left}</DestinationButton> : null}
+            {player.left ?
+                <DestinationButton onClick={onClickMoveDes}>{player.left}</DestinationButton> : null}
 
 
             <br/>
 
-            {props.player.right ?
-                <DestinationButton onClick={onClickMoveDes}>{props.player.right}</DestinationButton> : null}
+            {player.right ?
+                <DestinationButton onClick={onClickMoveDes}>{player.right}</DestinationButton> : null}
             <p style={{color: "red"}}>Walk down to stay here.</p>
         </PopupStyles>
     );
@@ -56,7 +55,7 @@ const NewCityPopUp = props => {
 
 const mapStateToProps = state => {
     return {
-        ...state
+        player:state.player
     };
 };
 

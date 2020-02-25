@@ -6,33 +6,44 @@ import Game from "./views/Game/Game";
 import WorldMap from './views/WorldMap/WorldMap'
 import {useEffect, useState} from 'react'
 import {connect} from "react-redux";
-import {getPlayer} from "./redux/actions";
+import {getPlayer, setLoggedIn} from "./redux/actions";
 import {withRouter} from 'react-router-dom'
 
 
 function App(props) {
-    let [loggedIn, setLoggedIn] = useState(false)
-
     useEffect(() => {
         const access_token = localStorage.getItem("access")
         const pk = localStorage.getItem("pk")
         if (access_token !== null && pk !== null) {
             props.getPlayer(pk)
-            setLoggedIn(true)
-            props.history.push("/game")
+
         }
     }, [])
 
     return (
         <div className="App">
 
-            <Route exact path="/" component={Entry}/>
-            {loggedIn ? <Route exact path="/game" component={Game}/> : <Redirect to={'/'}/>}
-            {loggedIn ? <Route exact path="/game/map" component={Map}/> : <Redirect to={'/'}/>}
-
-            < Route exact path='/game/map' component={WorldMap}/>
+            <Route exact path="/" render={props => {
+                const access_token = localStorage.getItem("access")
+                const pk = localStorage.getItem("pk")
+                if (access_token !== null && pk !== null) return <Redirect to='/game'/>
+                else return <Entry {...props}/>
+            }}/>
+            <Route exact path="/game" render={props => {
+                const access_token = localStorage.getItem("access")
+                const pk = localStorage.getItem("pk")
+                if (access_token !== null && pk !== null) return <Game {...props}/>
+                else return <Redirect to='/'/>
+            }}/>
+            <Route exact path="/game/map" render={props => {
+                const access_token = localStorage.getItem("access")
+                const pk = localStorage.getItem("pk")
+                if (access_token !== null && pk !== null) return <WorldMap {...props}/>
+                else return <Redirect to='/'/>
+            }}/>
         </div>
     );
 }
+
 
 export default withRouter(connect(null, {getPlayer})(App));

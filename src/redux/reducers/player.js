@@ -37,14 +37,15 @@ const initialState = {
     state: "--",
     left: "--",
     right: "--",
-    prev: '--'
+    prev: '--',
+
+    loggedIn: false
 };
 
 const player = (state = initialState, action) => {
     switch (action.type) {
         case UPDATE_USER:
             return {...state, ...action.payload}
-
 
         case GET_TOKEN:
             console.log("GETTING TOKEN")
@@ -79,12 +80,7 @@ const player = (state = initialState, action) => {
             return state
         case GET_PLAYER_SUCCESS:
             console.log(action.payload)
-            let stateCop = {...state}
-            for (let key in action.payload) {
-                stateCop[key] = action.payload[key]
-            }
-            // console.log(stateCop)
-            return stateCop
+            return {...state, ...action.payload}
         case GET_PLAYER_FAILURE:
             console.log("GET PLAYER FAILURE")
             console.log(action.payload)

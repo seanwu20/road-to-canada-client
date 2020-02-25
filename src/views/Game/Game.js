@@ -41,7 +41,7 @@ const Game = (props) => {
                 {newGame && props.player.city === "Miami" ? (
                     <IntroText newGame={newGame} setNewGame={setNewGame}/>
                 ) : null}
-                {props.player.water <= 0 || props.player.food <= 0 ? <IntroText dead/> : null}
+                {props.player.user_water <= 0 || props.player.user_food <= 0 ? <IntroText dead/> : null}
 
                 <Map/>
                 <Player/>

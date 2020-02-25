@@ -9,7 +9,11 @@ function WorldMap() {
             {name: '-',}
         ])
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_SERVER}/api/map/`)
+        axios.get(`${process.env.REACT_APP_SERVER}/api/map/`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('access')}`
+            }
+        })
             .then(function (response) {
                 setTreeData(response.data)
             })

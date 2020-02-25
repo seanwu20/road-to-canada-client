@@ -43,6 +43,7 @@ const Login = (props) => {
 
 
                 } catch (e) {
+                    console.log(e)
                     setLoginErr(["We had problems getting your user"])
 
                 }

@@ -16,7 +16,7 @@ import {
     PICKUP_SUPPLIES,
     NEXT_DESTINATION,
     NEXT_DESTINATION_SUCCESS,
-    NEXT_DESTINATION_FAIL, GET_TOKEN, GET_TOKEN_SUCCESS, GET_TOKEN_FAILURE
+    NEXT_DESTINATION_FAIL, GET_TOKEN, GET_TOKEN_SUCCESS, GET_TOKEN_FAILURE, SET_LOG_IN
 } from "./types";
 import player from "../reducers/player";
 
@@ -25,11 +25,8 @@ import player from "../reducers/player";
 // put token in local storage, initialize new player
 
 export const updateUserState = (userObj) => {
-    return dispatch => {
-        dispatch({type: UPDATE_USER, payload: userObj})
-    }
+    return {type: UPDATE_USER, payload: userObj}
 }
-
 
 
 /* Player actions */
@@ -58,9 +55,14 @@ export const moveToNextDestination = (currentPlayerState) => {
     //   e.preventDefault();
     console.log("NEXT_DESTINATION:", currentPlayerState);
     const nextCity = axios.put(
-        `${process.env.REACT_APP_SERVER}/api/move/`,
-        {...currentPlayerState}
-    );
+        `${process.env.REACT_APP_SERVER}/api/userinfo/${localStorage.getItem('pk')}/`,
+        {...currentPlayerState},
+        {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('access')}`
+            }
+        }
+    )
     return function (dispatch) {
         dispatch({type: NEXT_DESTINATION});
         nextCity

@@ -27,11 +27,7 @@ const Entry = () => {
     return (
         <EntryDiv>
             <Register/>
-
-
             <Login/>
-
-
         </EntryDiv>
     )
 
