@@ -1,9 +1,8 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {connect} from "react-redux";
-import {getPlayer, updateUserState} from "../../redux/actions";
+import {updateUserState} from "../../redux/actions";
 import {withRouter} from 'react-router-dom'
-import axiosWithAuth from "../../components/axiosWithAuth";
 
 
 const Login = (props) => {
@@ -86,4 +85,4 @@ const Login = (props) => {
 }
 
 
-export default withRouter(connect(null, {getPlayer, updateUserState})(Login));
+export default withRouter(connect(null, {updateUserState})(Login));

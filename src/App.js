@@ -27,10 +27,10 @@ function App(props) {
         <div className="App">
 
             <Route exact path="/" component={Entry}/>
-            <Route exact path="/game" component={Game}/>
-            <Route exact path="/game/map" component={Map}/>
+            {loggedIn ? <Route exact path="/game" component={Game}/> : <Redirect to={'/'}/>}
+            {loggedIn ? <Route exact path="/game/map" component={Map}/> : <Redirect to={'/'}/>}
 
-            <Route exact path='/game/map' component={WorldMap}/>
+            < Route exact path='/game/map' component={WorldMap}/>
         </div>
     );
 }

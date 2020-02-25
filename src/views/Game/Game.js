@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import {tiles} from "../../data/maps/1";
 import {store} from "../../store";
 import {connect} from "react-redux";
-import {getPlayer} from "../../redux/actions";
 
 import Player from "./../../player/Player";
 import Map from "./Map";
@@ -63,4 +62,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {getPlayer})(Game);
+export default connect(mapStateToProps, {})(Game);
