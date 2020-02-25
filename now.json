@@ -1,7 +1,7 @@
 {
   "build": {
     "env": {
-      "VARIABLE_NAME": "@REACT_APP_SERVER"
+      "VARIABLE_NAME": "@react_app_server"
     }
   }
 }
