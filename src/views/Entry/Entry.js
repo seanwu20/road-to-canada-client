@@ -1,11 +1,8 @@
-import React, {useState} from 'react'
+import React from 'react'
 import character from '../../assets/Characters/character_single.png'
 import '../../App.css'
 import styled from "styled-components";
 
-
-import {connect} from "react-redux";
-import {getToken, createPlayer} from "../../redux/actions";
 import Register from "./Register";
 import Login from "./Login";
 
@@ -27,7 +24,10 @@ const Entry = () => {
     return (
         <EntryDiv>
             <Register/>
+            <br/>
+            <br/>
             <Login/>
+            <img src={character} alt='character'/>
         </EntryDiv>
     )
 

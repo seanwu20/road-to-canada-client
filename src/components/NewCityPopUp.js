@@ -28,12 +28,12 @@ const DestinationButton = styled.button`
 `;
 
 
-const NewCityPopUp = ({player, moveToNextDestination} )=> {
-    const onClickMoveDes = () => {
+const NewCityPopUp = ({player, moveToNextDestination}) => {
+    const onClickMoveDes = (new_city) => {
         moveToNextDestination({
             user_food: player.user_food - 5,
             user_water: player.user_water - 5,
-            new_city: player.left
+            new_city
         })
     }
 
@@ -41,13 +41,15 @@ const NewCityPopUp = ({player, moveToNextDestination} )=> {
         <PopupStyles>
             <p>Choose your next destination:</p>
             {player.left ?
-                <DestinationButton onClick={onClickMoveDes}>{player.left}</DestinationButton> : null}
+                <DestinationButton onClick={() => {onClickMoveDes(player.left)}}>{player.left}</DestinationButton>
+                : null}
 
 
             <br/>
 
             {player.right ?
-                <DestinationButton onClick={onClickMoveDes}>{player.right}</DestinationButton> : null}
+                <DestinationButton onClick={() => onClickMoveDes(player.right)}>{player.right}</DestinationButton>
+                : null}
             <p style={{color: "red"}}>Walk down to stay here.</p>
         </PopupStyles>
     );
@@ -55,7 +57,7 @@ const NewCityPopUp = ({player, moveToNextDestination} )=> {
 
 const mapStateToProps = state => {
     return {
-        player:state.player
+        player: state.player
     };
 };
 

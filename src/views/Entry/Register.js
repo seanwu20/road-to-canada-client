@@ -37,7 +37,7 @@ const Register = (props) => {
                 localStorage.setItem("access", tokenData.data.access)
                 try {
                     let data = {
-                        user_id: parseInt(pk),
+                        user: parseInt(pk),
                         username: registerData.data.user.username,
                         user_food: 10,
                         user_water: 10,
@@ -52,7 +52,7 @@ const Register = (props) => {
                         left: "Jacksonville",
                         right: "Tallahassee"
                     }
-                    let userData = await axios.post(`${process.env.REACT_APP_SERVER}/api/userinfo/`, data, {
+                    await axios.post(`${process.env.REACT_APP_SERVER}/api/userinfo/`, data, {
                         headers: {
                             Authorization: `Bearer ${tokenData.data.access}`
                         }
@@ -85,14 +85,19 @@ const Register = (props) => {
     return (
         <>
             Register Here
-            <form onSubmit={onSubmitHandler}>
-                Username: <input type='text' name='username' onChange={onChangeHandler} required/>
+            <br/>
+            <br/>
+            <form onSubmit={onSubmitHandler} style={{width:'35%'}}>
+                Username: <br/><input type='text' name='username' onChange={onChangeHandler} required/>
                 <br/>
-                Email: <input type='email' name='email' onChange={onChangeHandler} required/>
                 <br/>
-                Password: <input type='password' name='password1' onChange={onChangeHandler} required/>
+                Email: <br/><input type='email' name='email' onChange={onChangeHandler} required/>
                 <br/>
-                Enter Password Again: <input type='password' name='password2' onChange={onChangeHandler} required/>
+                <br/>
+                Password: <br/><input type='password' name='password1' onChange={onChangeHandler} required/>
+                <br/>
+                <br/>
+                Enter Password Again: <br/><input type='password' name='password2' onChange={onChangeHandler} required/>
                 <br/>
                 <br/>
                 <input type='submit' value='Register'/>

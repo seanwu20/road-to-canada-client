@@ -40,7 +40,6 @@ const Game = (props) => {
     return (
         <>
             <Screen>
-                {console.log(props)}
                 {newGame && props.player.city === "Miami" ? (
                     <IntroText newGame={newGame} setNewGame={setNewGame}/>
                 ) : null}

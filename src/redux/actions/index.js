@@ -3,22 +3,18 @@ import axiosWithAuth from './../../components/axiosWithAuth'
 
 
 import {
-    CREATE_PLAYER,
-    CREATE_PLAYER_SUCCESS,
-    CREATE_PLAYER_FAILURE,
-
     UPDATE_USER,
-
 
     GET_PLAYER,
     GET_PLAYER_SUCCESS,
     GET_PLAYER_FAILURE,
+
     PICKUP_SUPPLIES,
+
     NEXT_DESTINATION,
     NEXT_DESTINATION_SUCCESS,
-    NEXT_DESTINATION_FAIL, GET_TOKEN, GET_TOKEN_SUCCESS, GET_TOKEN_FAILURE, SET_LOG_IN
+    NEXT_DESTINATION_FAIL
 } from "./types";
-import player from "../reducers/player";
 
 
 //register, get token,

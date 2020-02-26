@@ -1,17 +1,17 @@
 import {
     MOVE_PLAYER,
+
     GET_PLAYER,
     GET_PLAYER_SUCCESS,
     GET_PLAYER_FAILURE,
+
     PICKUP_SUPPLIES,
+
     NEXT_DESTINATION,
     NEXT_DESTINATION_SUCCESS,
     NEXT_DESTINATION_FAIL,
-    GET_TOKEN,
-    GET_TOKEN_FAILURE,
-    GET_TOKEN_SUCCESS
+    UPDATE_USER
 } from "../actions/types.js";
-import {CREATE_PLAYER, CREATE_PLAYER_FAILURE, CREATE_PLAYER_SUCCESS, UPDATE_USER} from "../actions/types";
 
 const initialState = {
     username: "--",
@@ -39,40 +39,12 @@ const initialState = {
     right: "--",
     prev: '--',
 
-    loggedIn: false
 };
 
 const player = (state = initialState, action) => {
     switch (action.type) {
         case UPDATE_USER:
             return {...state, ...action.payload}
-
-        case GET_TOKEN:
-            console.log("GETTING TOKEN")
-            return state
-        case GET_TOKEN_SUCCESS:
-            console.log("TOKENS IN LOCAL STORAGE");
-            return state
-        case GET_TOKEN_FAILURE:
-            console.log("TOKEN FAILURE")
-            console.log(action.payload)
-            return state
-
-
-        case CREATE_PLAYER:
-            console.log("CREATING PLAYER")
-            return state
-        case CREATE_PLAYER_SUCCESS:
-            console.log('CREATE PLAYER SUCCESSFUL')
-            let stateCopy = {...state}
-            for (let key in action.payload) {
-                stateCopy[key] = action.payload[key]
-            }
-            return stateCopy
-        case CREATE_PLAYER_FAILURE:
-            console.log("CREATE PLAYER FAILURE")
-            console.log(action.payload)
-            return state
 
 
         case GET_PLAYER:
@@ -90,6 +62,7 @@ const player = (state = initialState, action) => {
         case PICKUP_SUPPLIES:
             const {food, water} = action.payload;
             return {...state, user_food: state.user_food + food, user_water: state.user_water + water};
+
         case NEXT_DESTINATION:
             return {...state, isFetching: true, topOfMap: false};
         case NEXT_DESTINATION_SUCCESS:

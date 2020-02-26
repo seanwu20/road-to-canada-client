@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import axiosWithAuth from "../../components/axiosWithAuth";
-import axios from "axios";
 
 const IntroTextStyles = styled.div`
   position: absolute;

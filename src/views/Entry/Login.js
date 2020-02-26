@@ -63,13 +63,16 @@ const Login = (props) => {
 
     return (
         <>
+
             Login Here
-            <form onSubmit={onSubmitHandler}>
-                Username: <input type='text' name='username' onChange={onChangeHandler} required/>
+            <br/>
+            <br/>
+            <form onSubmit={onSubmitHandler} style={{width:'35%'}}>
+                Username: <br/> <input type='text' name='username' onChange={onChangeHandler} required/>
                 <br/>
-                Email: <input type='email' name='email' onChange={onChangeHandler} required/>
+                Email: <br/><input type='email' name='email' onChange={onChangeHandler} required/>
                 <br/>
-                Password: <input type='password' name='password' onChange={onChangeHandler} required/>
+                Password: <br/><input type='password' name='password' onChange={onChangeHandler} required/>
                 <br/>
                 <br/>
                 <br/>

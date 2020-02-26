@@ -32,7 +32,7 @@ function WorldMap() {
 export default WorldMap
 
 //dev notes:
-{/*
+/*
   add styles={{}}
 
   The tree's styles prop may be used to override any of the tree's default styling. 
@@ -65,4 +65,4 @@ so we need to ask the backend "what is my current location", and then go through
 if current_location == name, if True, then {color: 'red'} that node/leafNode.
 
 */
-}
+

@@ -1,6 +1,5 @@
 import React from "react";
 import '../../App.css'
-import Axios from "axios";
 
 export default function Menu({history}) {
 
