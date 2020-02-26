@@ -42,12 +42,6 @@ export const getPlayer = (pk) => dispatch => {
 
 export const pickUpSupplies = (food, water) => dispatch => {
     console.log(`PICKED UP ${food} food, ${water} water`);
-    //   return function(dispatch) {
-    //     dispatch({
-    //       type: PICKUP_SUPPLIES,
-    //       payload: {food, water}
-    //     });
-    //   };
     dispatch({type: PICKUP_SUPPLIES, payload: {food, water}});
 };
 

@@ -11,6 +11,9 @@ import Popup from "../../components/NewCityPopUp";
 import IntroText from "./IntroText";
 import Menu from './Menu'
 
+import {updateUserState} from './../../redux/actions/index'
+
+
 import styled from "styled-components";
 
 const Screen = styled.div`
@@ -29,7 +32,6 @@ const Game = (props) => {
                 tiles
             }
         });
-        // props.getPlayer();
 
     }, []);
 
@@ -38,10 +40,12 @@ const Game = (props) => {
     return (
         <>
             <Screen>
+                {console.log(props)}
                 {newGame && props.player.city === "Miami" ? (
                     <IntroText newGame={newGame} setNewGame={setNewGame}/>
                 ) : null}
-                {props.player.user_water <= 0 || props.player.user_food <= 0 ? <IntroText dead/> : null}
+                {props.player.user_water <= 0 || props.player.user_food <= 0 ?
+                    <IntroText dead={true} player={props.player} updateUser={updateUserState}/> : null}
 
                 <Map/>
                 <Player/>
@@ -62,4 +66,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {})(Game);
+export default connect(mapStateToProps, {updateUserState})(Game);

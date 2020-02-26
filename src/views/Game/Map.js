@@ -90,8 +90,8 @@ function MapTile(props) {
             {popup[1] === true ? (
                 <SuppliesPopup
                     location={player.location_2}
-                    food={player.food_available2}
-                    water={player.water_available2}
+                    food={player.food_available_2}
+                    water={player.water_available_2}
                 />
             ) : null}
         </>

@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import axiosWithAuth from "../../components/axiosWithAuth";
+import axios from "axios";
 
 const IntroTextStyles = styled.div`
   position: absolute;
@@ -16,6 +18,22 @@ const IntroTextStyles = styled.div`
 `;
 
 const IntroText = props => {
+    const resetGame = () => {
+        let data = {
+            user_id: props.player.user_id,
+            user_food: 10,
+            user_water: 10,
+            new_city: "Miami",
+        }
+        axiosWithAuth.put(`${process.env.REACT_APP_SERVER}/api/userinfo/${props.player.user_id}/`, data)
+            .then(res => {
+                props.updatePlayer(res.data)
+
+            })
+            .catch(err => console.log(err.response))
+    }
+
+
     if (props.dead) {
         return (
             <IntroTextStyles>
@@ -23,7 +41,7 @@ const IntroText = props => {
                 <p>
                     You Died
                 </p>
-                <button onClick={() => props.setNewGame(false)}>OK</button>
+                <button onClick={() => resetGame()}>RESET GAME</button>
             </IntroTextStyles>
         );
     }

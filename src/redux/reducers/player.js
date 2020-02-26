@@ -89,7 +89,7 @@ const player = (state = initialState, action) => {
 
         case PICKUP_SUPPLIES:
             const {food, water} = action.payload;
-            return {...state, food: state.food + food, water: state.water + water};
+            return {...state, user_food: state.user_food + food, user_water: state.user_water + water};
         case NEXT_DESTINATION:
             return {...state, isFetching: true, topOfMap: false};
         case NEXT_DESTINATION_SUCCESS:
