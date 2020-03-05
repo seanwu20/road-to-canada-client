@@ -12,9 +12,9 @@ import {withRouter} from 'react-router-dom'
 
 function App(props) {
     useEffect(() => {
-        const access_token = localStorage.getItem("access")
+        const keyToken = localStorage.getItem("key")
         const pk = localStorage.getItem("pk")
-        if (access_token !== null && pk !== null) {
+        if (keyToken !== null && pk !== null) {
             props.getPlayer(pk)
 
         }
@@ -24,21 +24,21 @@ function App(props) {
         <div className="App">
 
             <Route exact path="/" render={props => {
-                const access_token = localStorage.getItem("access")
+                const keyToken = localStorage.getItem("key")
                 const pk = localStorage.getItem("pk")
-                if (access_token !== null && pk !== null) return <Redirect to='/game'/>
+                if (keyToken !== null && pk !== null) return <Redirect to='/game'/>
                 else return <Entry {...props}/>
             }}/>
             <Route exact path="/game" render={props => {
-                const access_token = localStorage.getItem("access")
+                const keyToken = localStorage.getItem("key")
                 const pk = localStorage.getItem("pk")
-                if (access_token !== null && pk !== null) return <Game {...props}/>
+                if (keyToken !== null && pk !== null) return <Game {...props}/>
                 else return <Redirect to='/'/>
             }}/>
             <Route exact path="/game/map" render={props => {
-                const access_token = localStorage.getItem("access")
+                const keyToken = localStorage.getItem("key")
                 const pk = localStorage.getItem("pk")
-                if (access_token !== null && pk !== null) return <WorldMap {...props}/>
+                if (keyToken !== null && pk !== null) return <WorldMap {...props}/>
                 else return <Redirect to='/'/>
             }}/>
         </div>

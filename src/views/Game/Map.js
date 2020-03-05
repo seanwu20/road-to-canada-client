@@ -65,13 +65,17 @@ function MapTile(props) {
     useEffect(() => {
         const arriveFirstStore = getTileSprite(tile) === "supplies1" && player.position[0] === 300 && player.position[1] === 420
         const arriveSecondStore = getTileSprite(tile) === "supplies2" && player.position[0] === 840 && player.position[1] === 180
-        if (arriveFirstStore || arriveSecondStore) {
-            pickUpSupplies(player.food_available, player.water_available);
-            setPopup(true)
+        if (arriveFirstStore) {
+            pickUpSupplies(player.food_available_1, player.water_available_1);
+            setPopup([true, false])
 
-            if (arriveFirstStore) setPopup([true, false])
-            else if (arriveSecondStore) setPopup([false, true])
-        } else setPopup(false)
+            // if (arriveFirstStore) setPopup([true, false])
+            // else if (arriveSecondStore) setPopup([false, true])
+        } else if (arriveSecondStore) {
+            pickUpSupplies(player.food_available_2, player.water_available_2);
+            setPopup([false, true])
+        }
+        else setPopup([false, false])
     }, [player.position]);
 
     const [popup, setPopup] = useState([false, false]);
@@ -83,8 +87,8 @@ function MapTile(props) {
                 (
                     <SuppliesPopup
                         location={player.location}
-                        food={player.food_available}
-                        water={player.water_available}
+                        food={player.food_available_1}
+                        water={player.water_available_1}
                     />
                 ) : null}
             {popup[1] === true ? (

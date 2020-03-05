@@ -9,7 +9,6 @@ const Register = (props) => {
 
     const [newUserCreds, setNewUserCreds] = useState({
         "username": "",
-        "email": "",
         "password1": "",
         "password2": ""
     })
@@ -27,37 +26,24 @@ const Register = (props) => {
     const onSubmitHandler = async e => {
         e.preventDefault()
         try {
-            const registerData = await axios.post(process.env.REACT_APP_SERVER + '/api/register/', newUserCreds)
-            const pk = registerData.data.user.pk
-            localStorage.setItem("pk", pk)
+            const registerKey = await axios.post(process.env.REACT_APP_SERVER + '/api/register/', newUserCreds)
+            localStorage.setItem("key", registerKey.data.key)
             try {
-                let cleaned = {...newUserCreds}
-                cleaned.password = newUserCreds.password1
-                let tokenData = await axios.post(process.env.REACT_APP_SERVER + '/api/token/', cleaned)
-                localStorage.setItem("access", tokenData.data.access)
-                try {
-                    let data = {
-                        user: parseInt(pk),
-                        username: registerData.data.user.username,
-                        user_food: 10,
-                        user_water: 10,
-                        state: "Florida",
-                        city: "Miami",
-                        location: "fast_food",
-                        food_available: 2,
-                        water_available: 2,
-                        location_2: "hotel",
-                        water_available_2: 2,
-                        food_available_2: 2,
-                        left: "Jacksonville",
-                        right: "Tallahassee"
+                let user = await axios.get(process.env.REACT_APP_SERVER + '/api/user/', {
+                    headers: {
+                        Authorization: `Token ${registerKey.data.key}`
                     }
-                    await axios.post(`${process.env.REACT_APP_SERVER}/api/userinfo/`, data, {
+                })
+                localStorage.setItem("pk", user.data.pk)
+                try {
+                    let userData = await axios.post(`${process.env.REACT_APP_SERVER}/api/userdata/`, {id: user.data.pk}, {
                         headers: {
-                            Authorization: `Bearer ${tokenData.data.access}`
+                            Authorization: `Token ${registerKey.data.key}`
                         }
                     })
-                    props.updateUserState(data)
+                    userData.data['username'] = user.data.username
+                    props.updateUserState(userData.data)
+                    console.log("User successfully created")
                     props.history.push('/game')
 
 
@@ -68,17 +54,16 @@ const Register = (props) => {
                 }
             } catch (e) {
                 console.log(e.response)
-                console.log("TOKEN ERROR")
+                setRegisterErrors(["We had problems getting your user"])
             }
         } catch (e) {
-            console.log(e.response.data)
-            let errs = []
-            for (let key in e.response.data) {
-                for (let err of e.response.data[key]) {
-                    errs.push(err)
+            let errCollection = []
+            for(let key in e.response.data){
+                for(let err of e.response.data[key]) {
+                    errCollection.push(err)
                 }
             }
-            setRegisterErrors(errs)
+            setRegisterErrors(errCollection)
         }
     }
 
@@ -87,11 +72,8 @@ const Register = (props) => {
             Register Here
             <br/>
             <br/>
-            <form onSubmit={onSubmitHandler} style={{width:'35%'}}>
+            <form onSubmit={onSubmitHandler} style={{width: '35%'}}>
                 Username: <br/><input type='text' name='username' onChange={onChangeHandler} required/>
-                <br/>
-                <br/>
-                Email: <br/><input type='email' name='email' onChange={onChangeHandler} required/>
                 <br/>
                 <br/>
                 Password: <br/><input type='password' name='password1' onChange={onChangeHandler} required/>

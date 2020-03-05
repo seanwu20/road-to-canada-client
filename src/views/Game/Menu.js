@@ -5,7 +5,7 @@ export default function Menu({history}) {
 
     const logout = e => {
         e.preventDefault()
-        localStorage.removeItem('access')
+        localStorage.removeItem('key')
         localStorage.removeItem('pk')
         history.push('/')
     }

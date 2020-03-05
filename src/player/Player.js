@@ -13,7 +13,11 @@ const Player = props => {
 
         return () => {
             setTimeout(() => {
-                playerRef.current.classList.remove("walk");
+                try {
+                    playerRef.current.classList.remove("walk");
+                } catch (e) {
+                    
+                }
             }, 400);
         };
     }, [props.position]);

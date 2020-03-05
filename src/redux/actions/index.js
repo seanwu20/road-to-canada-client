@@ -29,10 +29,10 @@ export const updateUserState = (userObj) => {
 export const getPlayer = (pk) => dispatch => {
     dispatch({type: GET_PLAYER});
     axiosWithAuth.get(
-        `${process.env.REACT_APP_SERVER}/api/userinfo/${pk}/`,
+        `${process.env.REACT_APP_SERVER}/api/userdata/${pk}/`,
     )
         .then(res => dispatch({type: GET_PLAYER_SUCCESS, payload: res.data}))
-        .catch(err => dispatch({type: GET_PLAYER_FAILURE, payload: err}));
+        .catch(err => dispatch({type: GET_PLAYER_FAILURE, payload: err.response}));
 }
 
 
@@ -45,11 +45,11 @@ export const moveToNextDestination = (currentPlayerState) => {
     //   e.preventDefault();
     console.log("NEXT_DESTINATION:", currentPlayerState);
     const nextCity = axios.put(
-        `${process.env.REACT_APP_SERVER}/api/userinfo/${localStorage.getItem('pk')}/`,
+        `${process.env.REACT_APP_SERVER}/api/userdata/${localStorage.getItem('pk')}/`,
         {...currentPlayerState},
         {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('access')}`
+                Authorization: `Token ${localStorage.getItem('key')}`
             }
         }
     )

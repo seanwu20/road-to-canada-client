@@ -26,38 +26,43 @@ const Login = (props) => {
     const onSubmitHandler = async e => {
         e.preventDefault()
         try {
-            const loginData = await axios.post(process.env.REACT_APP_SERVER + '/api/login/', userCreds)
-            const pk = loginData.data.user.pk
-            localStorage.setItem("pk", pk)
+            const loginKey = await axios.post(process.env.REACT_APP_SERVER + '/api/login/', userCreds)
+            localStorage.setItem("key", loginKey.data.key)
             try {
-                let tokenData = await axios.post(process.env.REACT_APP_SERVER + '/api/token/', userCreds)
-                localStorage.setItem("access", tokenData.data.access)
+                let user = await axios.get(process.env.REACT_APP_SERVER + '/api/user/', {
+                    headers: {
+                        Authorization: `Token ${loginKey.data.key}`
+                    }
+                })
+                localStorage.setItem("pk", user.data.pk)
                 try {
-                    let userData = await axios.get(`${process.env.REACT_APP_SERVER}/api/userinfo/${pk}/`, {
+                    let userData = await axios.get(`${process.env.REACT_APP_SERVER}/api/userdata/${user.data.pk}/`, {
                         headers: {
-                            Authorization: `Bearer ${tokenData.data.access}`
+                            Authorization: `Token ${loginKey.data.key}`
                         }
                     })
                     props.updateUserState(userData.data)
+                    console.log("User successfully retrieved")
                     props.history.push('/game')
 
 
                 } catch (e) {
-                    console.log(e)
-                    setLoginErr(["We had problems getting your user"])
+                    console.log(e.response)
+                    setLoginErr(["We had problems getting your user data"])
 
                 }
             } catch (e) {
-                console.log("TOKEN ERROR")
+                console.log(e.response)
+                setLoginErr(["We had problems getting your user info"])
             }
         } catch (e) {
-            let errs = []
+            let errCollection = []
             for (let key in e.response.data) {
                 for (let err of e.response.data[key]) {
-                    errs.push(err)
+                    errCollection.push(err)
                 }
             }
-            setLoginErr(errs)
+            setLoginErr(errCollection)
         }
     }
 
@@ -67,10 +72,9 @@ const Login = (props) => {
             Login Here
             <br/>
             <br/>
-            <form onSubmit={onSubmitHandler} style={{width:'35%'}}>
+            <form onSubmit={onSubmitHandler} style={{width: '35%'}}>
                 Username: <br/> <input type='text' name='username' onChange={onChangeHandler} required/>
                 <br/>
-                Email: <br/><input type='email' name='email' onChange={onChangeHandler} required/>
                 <br/>
                 Password: <br/><input type='password' name='password' onChange={onChangeHandler} required/>
                 <br/>

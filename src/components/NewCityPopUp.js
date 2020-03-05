@@ -29,11 +29,12 @@ const DestinationButton = styled.button`
 
 
 const NewCityPopUp = ({player, moveToNextDestination}) => {
-    const onClickMoveDes = (new_city) => {
+
+    const onClickMoveDes = (city) => {
         moveToNextDestination({
             user_food: player.user_food - 5,
             user_water: player.user_water - 5,
-            new_city
+            city
         })
     }
 

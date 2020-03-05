@@ -22,11 +22,13 @@ const IntroText = props => {
             user_id: props.player.user_id,
             user_food: 10,
             user_water: 10,
-            new_city: "Miami",
+            city: "Miami",
         }
-        axiosWithAuth.put(`${process.env.REACT_APP_SERVER}/api/userinfo/${props.player.user_id}/`, data)
+        axiosWithAuth.put(`${process.env.REACT_APP_SERVER}/api/userdata/${props.player.user_id}/`, data)
             .then(res => {
                 props.updatePlayer(res.data)
+                props.history.push("/game")
+
 
             })
             .catch(err => console.log(err.response))
