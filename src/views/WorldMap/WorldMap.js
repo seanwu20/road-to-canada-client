@@ -11,7 +11,7 @@ function WorldMap() {
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_SERVER}/api/map/`, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('access')}`
+                Authorization: `Token ${localStorage.getItem('key')}`
             }
         })
             .then(function (response) {
